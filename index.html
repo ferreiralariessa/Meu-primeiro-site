@@ -1,11 +1,488 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>🌈 Galeria Infantil · 50 Atividades</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Comic Sans MS', 'Chalkboard', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f9f0c1 0%, #fadadd 100%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        /* cabeçalho lúdico */
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .cabecalho h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #2b3a67;
+            text-shadow: 4px 4px 0 #ffb347;
+            letter-spacing: 2px;
+            word-break: break-word;
+        }
+
+        .cabecalho h1 span {
+            display: inline-block;
+            transform: rotate(-5deg);
+            background: #ffd93e;
+            padding: 0 15px;
+            border-radius: 60px 20px 60px 20px;
+            margin: 0 5px;
+        }
+
+        .subtitulo {
+            font-size: 1.4rem;
+            color: #3a506b;
+            background: rgba(255, 255, 255, 0.7);
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 40px;
+            margin-top: 10px;
+            backdrop-filter: blur(4px);
+            border: 2px dashed #ff8a5c;
+        }
+
+        /* contador divertido */
+        .contador {
+            max-width: 900px;
+            margin: 20px auto 30px auto;
+            background: #a1c3ff;
+            padding: 10px 20px;
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 4px solid white;
+            box-shadow: 0 8px 0 #4a6fa5;
+        }
+
+        .contador-texto {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e2b45;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contador-texto img {
+            width: 36px;
+            height: 36px;
+            filter: drop-shadow(2px 2px 0 white);
+        }
+
+        .caminho-link {
+            background: #feffcd;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            border: 3px solid white;
+            color: #2c3e6d;
+        }
+
+        .caminho-link code {
+            background: #e3e7ff;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        /* grade principal — 50 espaços */
+        .galeria-grade {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 1rem 0.5rem;
+        }
+
+        /* cada card será um espaço */
+        .card-atividade {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(6px);
+            border-radius: 40px 20px 40px 20px;
+            padding: 1rem 0.8rem 0.8rem 0.8rem;
+            box-shadow: 0 12px 0 #ba9ffb, 0 6px 15px rgba(0, 0, 0, 0.2);
+            border: 3px solid white;
+            transition: transform 0.1s ease, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-atividade:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 0 #9f7aea, 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        /* a imagem ocupa quase todo o card */
+        .card-atividade img {
+            width: 100%;
+            aspect-ratio: 1 / 1; /* quadradinho bonito */
+            object-fit: cover;      /* cobre sem esticar feio */
+            border-radius: 30px 15px 30px 15px;
+            border: 4px solid white;
+            background: #fce1b9;    /* cor de fundo amigável enquanto a imagem não carrega */
+            box-shadow: inset 0 0 0 2px #ffb56b;
+            transition: 0.15s;
+        }
+
+        /* legenda da atividade */
+        .card-atividade p {
+            margin-top: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #203a5c;
+            background: #fffbe3;
+            padding: 5px 5px;
+            width: 100%;
+            border-radius: 30px;
+            border: 2px solid white;
+            box-shadow: 0 3px 0 #c5a0ff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* placeholder para links quebrados ou não definidos */
+        img[alt] {
+            font-size: 0.8rem;
+            color: #3f2b1c;
+            background: #ffe5b4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* rodapé divertido */
+        .rodape {
+            text-align: center;
+            margin-top: 4rem;
+            font-size: 1.3rem;
+            color: #402a1b;
+        }
+
+        .rodape a {
+            color: #3f2b6b;
+            background: #ffdd9a;
+            padding: 6px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid white;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .rodape a:hover {
+            background: #ffb882;
+        }
+
+        /* dica de como substituir imagens */
+        .dica {
+            background: #c9e4ff;
+            border-radius: 60px;
+            max-width: 800px;
+            margin: 30px auto 10px auto;
+            padding: 16px 24px;
+            border: 5px dotted #306cac;
+            color: #032b44;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .dica strong {
+            background: #fedd9e;
+            padding: 5px 12px;
+            border-radius: 30px;
+        }
+
+        /* responsividade fina */
+        @media (max-width: 550px) {
+            .cabecalho h1 {
+                font-size: 2rem;
+            }
+            .contador {
+                flex-direction: column;
+                gap: 10px;
+                border-radius: 50px;
+            }
+            .galeria-grade {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.9rem;
+            }
+        }
+        @media (max-width: 380px) {
+            .galeria-grade {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  Eu não sei o que estou fazendo !  
+    <div class="cabecalho">
+        <h1>
+            <span>🧸</span> ATIVIDADES <span>INFANTIS</span> <span>🎨</span>
+        </h1>
+        <div class="subtitulo">🌟 50 espaços para guardar suas imagens favoritas 🌟</div>
+    </div>
+
+    <!-- Contador e mini tutorial -->
+    <div class="contador">
+        <div class="contador-texto">
+            <img src="https://cdn-icons-png.flaticon.com/512/1637/1637288.png" alt="ícone de lápis" style="width:36px; background: none;">
+            <span>50 atividades em grade</span>
+        </div>
+        <div class="caminho-link">
+            <code>🔗 src="seu-link-aqui"</code>
+        </div>
+    </div>
+
+    <!-- DICA IMPORTANTE: como preencher com suas imagens -->
+    <div class="dica">
+        <strong>✏️  MODO DE USAR:</strong> Basta substituir os links de exemplo (<code>https://exemplo.com/... </code>) dentro das 50 tags <code>&lt;img&gt;</code> pelos seus próprios links de imagens de atividades (pintura, colagem, brincadeiras, etc). Você pode copiar endereços de sites como Freepik, Flaticon ou até fotos do seu computador hospedadas. 
+    </div>
+
+    <!-- GALERIA: 50 ESPAÇOS COM IMG -->
+    <div class="galeria-grade">
+        <!-- 1 a 10 -->
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/12/13/00/13/rainbow-1903318_1280.jpg" alt="arco-íris para colorir">
+            <p>🌈 colorir</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/01/08/13/58/butterfly-1962977_1280.jpg" alt="borboleta pontilhismo">
+            <p>🦋 pontilhar</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2013/07/13/10/24/child-157200_1280.png" alt="criança lendo">
+            <p>📖 leitura</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/03/31/20/06/child-1295736_1280.png" alt="blocos de montar">
+            <p>🧱 blocos</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/11/50/boat-312331_1280.png" alt="barquinho de papel">
+            <p>⛵ dobraduras</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2020/06/26/14/18/finger-painting-5342724_1280.jpg" alt="mãozinha pintando">
+            <p>🖐️ tinta</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/44/ball-1298783_1280.png" alt="bola colorida">
+            <p>⚽ brincar</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/01/08/13/58/child-1963083_1280.jpg" alt="criança com massinha">
+            <p>🧪 massinha</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/11/17/animal-1300337_1280.png" alt="quebra-cabeça de animais">
+            <p>🧩 quebra-cabeça</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/07/16/47/kingfisher-2046453_1280.jpg" alt="desenho de passarinho">
+            <p>🐦 desenho</p>
+        </div>
+
+        <!-- 11 a 20 -->
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/06/09/18/19/duck-1446585_1280.png" alt="pato de banheira">
+            <p>🛁 banho</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/12/05/10/52/teddy-bear-1883628_1280.jpg" alt="ursinho de pelúcia">
+            <p>🧸 aconchego</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/02/10/24/balloons-303676_1280.png" alt="balões coloridos">
+            <p>🎈 festa</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/10/45/amusement-park-1300383_1280.png" alt="carrinho de parque">
+            <p>🎠 parquinho</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/01/08/13/58/crayons-1963084_1280.jpg" alt="giz de cera">
+            <p>🖍️ colorir</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/08/30/17/32/children-2697955_1280.jpg" alt="crianças dançando">
+            <p>💃 dança</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/44/frog-1298777_1280.png" alt="sapinho de dobradura">
+            <p>🐸 origami</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/08/14/25/puzzle-2049050_1280.jpg" alt="peça de encaixe">
+            <p>🔷 encaixe</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/03/31/23/07/balloon-1297195_1280.png" alt="balão em forma de coração">
+            <p>❤️ carinho</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/08/14/05/puzzle-2049033_1280.jpg" alt="criança montando puzzle">
+            <p>🧩 raciocínio</p>
+        </div>
+
+        <!-- 21 a 30 -->
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/11/55/crayons-312574_1280.png" alt="caixa de giz">
+            <p>🎨 desenho livre</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/44/ball-1298779_1280.png" alt="bola de futebol">
+            <p>⚽ futebol</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/06/20/11/14/playground-2422548_1280.jpg" alt="escorregador">
+            <p>🛝 escorregar</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/03/31/17/58/children-1294281_1280.png" alt="roda de crianças">
+            <p>🤝 roda</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/10/45/child-1300395_1280.png" alt="criança balançando">
+            <p>🌿 balanço</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/10/39/umbrella-311033_1280.png" alt="guarda-chuva colorido">
+            <p>☔ dias de chuva</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/44/child-1298764_1280.png" alt="criança no parque">
+            <p>🌳 natureza</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/01/18/16/46/children-1990395_1280.jpg" alt="pintura a dedo">
+            <p>🖐️ tinta guache</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/52/boat-1298850_1280.png" alt="barquinho de papel">
+            <p>🚤 navegar</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2013/07/13/10/44/child-157678_1280.png" alt="criança fantasiada">
+            <p>🎭 fantasia</p>
+        </div>
+
+        <!-- 31 a 40 -->
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/08/14/25/puzzle-2049050_1280.jpg" alt="peças coloridas">
+            <p>🧩 montagem</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/03/31/20/06/children-1295735_1280.png" alt="crianças brincando">
+            <p>🤸‍♂️ movimento</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/10/13/crayons-310129_1280.png" alt="giz de cera sortido">
+            <p>🌈 colorido</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/11/25/animal-1300371_1280.png" alt="animais da fazenda">
+            <p>🐄 fazendinha</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/09/55/child-309832_1280.png" alt="criança com balde">
+            <p>🏖️ areia</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/12/05/23/29/ball-1885157_1280.jpg" alt="bolhas de sabão">
+            <p>🫧 bolhas</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/11/17/boy-1300324_1280.png" alt="menino com pipa">
+            <p>🪁 pipa</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/09/29/cartoon-1299394_1280.png" alt="palhaço alegre">
+            <p>🤡 circo</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/07/16/46/child-2046461_1280.jpg" alt="criança abraçando ursinho">
+            <p>🧸 amizade</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/10/24/children-310217_1280.png" alt="crianças pulando corda">
+            <p>🪢 corda</p>
+        </div>
+
+        <!-- 41 a 50 (últimos 10) -->
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/11/25/animal-1300367_1280.png" alt="gatinho desenho">
+            <p>😺 gato</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/09/55/child-309833_1280.png" alt="criança com brinquedo">
+            <p>🚂 trenzinho</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/10/18/child-1299972_1280.png" alt="criança com livro">
+            <p>📚 historinha</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/09/08/dog-1299029_1280.png" alt="cachorrinho">
+            <p>🐶 pet</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/07/16/47/fish-2046464_1280.jpg" alt="peixinho colorido">
+            <p>🐠 aquário</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2014/04/03/09/58/child-309857_1280.png" alt="criança com balão">
+            <p>🎈 alegria</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/02/08/14/20/children-2049040_1280.jpg" alt="mãozinhas pintadas">
+            <p>✋ arte coletiva</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/52/boat-1298849_1280.png" alt="barco a vela">
+            <p>⛵ velejar</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2016/04/01/08/44/balloon-1298768_1280.png" alt="balão coração">
+            <p>💕 amor</p>
+        </div>
+        <div class="card-atividade">
+            <img src="https://cdn.pixabay.com/photo/2017/01/18/16/46/children-1990396_1280.jpg" alt="crianças pintando painel">
+            <p>🖼️ criação</p>
+        </div>
+        <!-- FIM DOS 50 CARDS -->
+    </div>
+
+    <!-- rodapé com mensagem -->
+    <div class="rodape">
+        <a href="#" onclick="alert('Agora é só trocar os links das imagens pelas suas!'); return false;">✏️  clique para editar  ✏️</a>
+        <p style="font-size:1rem; margin-top:15px;">⭐ personalize cada <strong>src="..."</strong> com suas atividades preferidas ⭐</p>
+        <p style="background:#ffd966; display:inline-block; padding:6px 25px; border-radius:40px; margin-top:5px;">🌻 50 espaços prontinhos para guardar suas memórias 🌻</p>
+    </div>
+
+    <!-- explicação rápida adicional no final -->
+    <div style="max-width:900px; margin: 2rem auto 0; background:#fbe192; border-radius: 50px 50px 20px 20px; padding: 20px; border:6px solid #fef9ae; text-align:center;">
+        🧩 <strong>COMO SUBSTITUIR:</strong> Basta editar cada <code style="background: #2b3a67; color: white; padding: 4px 10px; border-radius: 30px;">img src="link"</code> pelo endereço da sua imagem. Se não aparecer, verifique se o link é público e direto (termina em .jpg, .png, etc). Aproveite!
+    </div>
 </body>
 </html>
